@@ -13,6 +13,7 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 var indexRouter = require('./routes/index');
+var costumesRouter = require('./routes/costumes');
 var usersRouter = require('./routes/users');
 var resourceRouter = require('./routes/resource');
 var Costume = require('./models/costume');
@@ -66,6 +67,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/costumes', costumesRouter);
 app.use('/users', usersRouter);
 app.use('/resource', resourceRouter);
 

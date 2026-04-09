@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h1= title
+  p Dynamic list of costumes from the database.
+  ul
+    each item in results
+      li #{item.costume_type} | Size: #{item.size} | Cost: $#{item.cost}

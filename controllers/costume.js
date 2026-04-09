@@ -12,6 +12,19 @@ exports.costume_list = async function(req, res) {
   }
 };
 
+// VIEWS
+// Handle a show all view
+exports.costume_view_all_Page = async function(req, res) {
+  try {
+    var theCostumes = await Costume.find();
+    res.render('costumes', { title: 'Costume Search Results', results: theCostumes });
+  }
+  catch (err) {
+    res.status(500);
+    res.send('Error fetching costumes to view');
+  }
+};
+
 // For a specific Costume
 exports.costume_detail = function(req, res) {
   res.send('NOT IMPLEMENTED: Costume detail: ' + req.params.id);
