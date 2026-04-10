@@ -3,12 +3,12 @@ var Costume = require('../models/costume');
 // List of all Costumes
 exports.costume_list = async function(req, res) {
   try {
-    var theCostumes = await Costume.find();
+    let theCostumes = await Costume.find();
     res.send(theCostumes);
   }
   catch (err) {
     res.status(500);
-    res.send('Error retrieving costumes');
+    res.send(`{"error": ${err}}`);
   }
 };
 
@@ -16,12 +16,12 @@ exports.costume_list = async function(req, res) {
 // Handle a show all view
 exports.costume_view_all_Page = async function(req, res) {
   try {
-    var theCostumes = await Costume.find();
+    let theCostumes = await Costume.find();
     res.render('costumes', { title: 'Costume Search Results', results: theCostumes });
   }
   catch (err) {
     res.status(500);
-    res.send('Error fetching costumes to view');
+    res.send(`{"error": ${err}}`);
   }
 };
 
@@ -31,8 +31,22 @@ exports.costume_detail = function(req, res) {
 };
 
 // Handle Costume create on POST
-exports.costume_create_post = function(req, res) {
-  res.send('NOT IMPLEMENTED: Costume create POST');
+exports.costume_create_post = async function(req, res) {
+  console.log(req.body);
+  let document = new Costume();
+
+  document.costume_type = req.body.costume_type;
+  document.size = req.body.size;
+  document.cost = req.body.cost;
+
+  try {
+    let result = await document.save();
+    res.send(result);
+  }
+  catch (err) {
+    res.status(500);
+    res.send(`{"error": ${err}}`);
+  }
 };
 
 // Handle Costume delete form on DELETE
